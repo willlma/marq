@@ -10,6 +10,7 @@ var storeFolderId = function(folder) {
 
 var createBookmark = function(bookmark, parentId) {
   bookmarks.getSubTree(parentId, function(trees) {
+    if (!trees || !parentId) createBookmarksFolder(bookmark);
     var children = trees[0].children;
     var oldBookmark;
     for (var i = children.length; i--;)
@@ -59,7 +60,7 @@ var executeShowRule = function(tab) {
   });
 };
 
-contextMenus.onClicked.addListener(function() {
+contextMenus.onClicked.addListener(function() {  
   tabs.query({
     active: true,
     currentWindow: true
@@ -72,15 +73,15 @@ contextMenus.onClicked.addListener(function() {
     }, function(results) {
       var bookmark = results[0];
       storage.local.get('folderId', function(result) {
-        var folderId = result.folderId;
-        if (folderId) createBookmark(bookmark, folderId);
-        else createBookmarksFolder(bookmark);
+        createBookmark(bookmark, result.folderId);
       });
     });
   });
 });
 
 tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  console.log(changeInfo.status);
+  console.log(tab.url);
   if (changeInfo.status!=='loading') return;
   storage.sync.get(tab.url, function(result) {
     var position = result[tab.url];

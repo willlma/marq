@@ -3,7 +3,7 @@
 
   "name": "Marq",
   "description": "Adds page location to bookmarks",
-  "version": "0.1",
+  "version": "0.1.1",
   "background": {
     "scripts": ["index.js"], 
     "persistent": false
@@ -18,7 +18,7 @@
     "storage",
     "contextMenus",
     "bookmarks",
-    "https://*/",
-    "http://*/"
+    "http://*/",
+    "https://*/"
   ]
 }
