@@ -5,7 +5,7 @@
   "description": "Adds page location to bookmarks",
   "version": "0.1.1",
   "background": {
-    "scripts": ["index.js"], 
+    "scripts": ["background.js"], 
     "persistent": false
   },
   "icons": {

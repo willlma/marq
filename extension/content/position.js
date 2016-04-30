@@ -62,7 +62,6 @@ var getLocation = function(textNode) {
 };
 
 var savePosition = function(range) {
-  var range = window.getSelection().getRangeAt(0);
   var textNode = range.startContainer; 
   var container = textNode.parentNode;
   var position = {};

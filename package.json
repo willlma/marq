@@ -1,0 +1,28 @@
+{
+  "name": "marq",
+  "version": "0.1.0",
+  "description": "Send links to anyone that go to a specific place",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willlma/marq.git"
+  },
+  "keywords": [
+    "link",
+    "marq",
+    "place"
+  ],
+  "author": "Will Marquardt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willlma/marq/issues"
+  },
+  "homepage": "https://github.com/willlma/marq#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4"
+  }
+}
