@@ -1,62 +1,60 @@
-(function(exports) {
-  var TAG = 'TRIPLING-INTERVAL  ';
+(function (exports) {
+  const TAG = 'TRIPLING-INTERVAL  ';
 
-  var timeoutId;
+  let timeoutId;
 
-  var setTriplingInterval = function(callback, interval) {
-    timeoutId = setTimeout(function() {
+  const setTriplingInterval = (callback, interval) => {
+    timeoutId = setTimeout(() => {
       callback();
       setTriplingInterval(callback, interval * 3);
-    });
+    }, interval);
   };
 
-  var clearTriplingInterval = function() {
+  const clearTriplingInterval = () => {
     window.clearTimeout(timeoutId);
   };
 
   exports.triplingInterval = {
     set: setTriplingInterval,
-    clear: clearTriplingInterval
+    clear: clearTriplingInterval,
   };
-
 })(this);
 
-(function(exports, storage) {
+(async function (exports) {
   'use strict';
-  var TAG = 'RESTORE  ';
+  const TAG = 'RESTORE  ';
 
-  var url = location.href;
+  const url = location.href;
 
-  var getRange = function(position) {
-    var container = document.querySelector(position.selector);
+  const getRange = (position) => {
+    const container = document.querySelector(position.selector);
     if (!container) return;
-    var range = document.createRange();
-    var textNode = container.childNodes[position.nodeIndex];
+    const range = document.createRange();
+    const textNode = container.childNodes[position.nodeIndex];
     range.setStart(textNode, position.offset);
     range.setEnd(textNode, position.offset + 1);
     return range;
   };
 
-  var moveRuleUntilLoad = function(range) {
+  const moveRuleUntilLoad = (range) => {
     triplingInterval.set(showRule.bind(this, range), 10);
-    window.onload = function() {
+    window.onload = () => {
       showRule(range);
       triplingInterval.clear();
     };
   };
 
-  storage.get(url, function(result) {
-    var position = result[url];
-    if (!position) return;
-    var init = function() {
-      var range = getRange(position);
-      var top = showRule(range);
-      window.scrollTo(0, top - window.innerHeight / 3);
-      moveRuleUntilLoad(range);
-    };
-    init = init.bind(this, position);
-    if (document.readyState==='interactive') init();
-    else document.addEventListener('DOMContentLoaded', init);
-  });
+  const result = await browser.storage.sync.get(url);
+  const position = result[url];
+  if (!position) return;
 
-})(this, chrome.storage.sync);
+  const init = () => {
+    const range = getRange(position);
+    const top = showRule(range);
+    window.scrollTo(0, top - window.innerHeight / 3);
+    moveRuleUntilLoad(range);
+  };
+
+  if (document.readyState === 'interactive') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})(this);

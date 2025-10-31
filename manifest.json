@@ -5,9 +5,16 @@
   "description": "Adds page location to bookmarks",
   "version": "0.1.1",
   "background": {
-    "scripts": ["index.js"], 
+    "scripts": ["index.js"],
     "persistent": false
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/show-rule.js"],
+      "run_at": "document_start"
+    }
+  ],
   "icons": {
     "16": "assets/icon-16.png",
     "48": "assets/icon-48.png",
